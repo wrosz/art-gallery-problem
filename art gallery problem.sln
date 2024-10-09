@@ -1,0 +1,23 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 17
+VisualStudioVersion = 17.11.35327.3
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{888888A0-9F3D-457C-B088-3A5042F75D52}") = "art gallery problem", "art gallery problem\art gallery problem.pyproj", "{EB5DCAFC-C3F2-493B-A4C6-8C297895EFBA}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{EB5DCAFC-C3F2-493B-A4C6-8C297895EFBA}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{EB5DCAFC-C3F2-493B-A4C6-8C297895EFBA}.Release|Any CPU.ActiveCfg = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {DB464C2A-7286-4E99-8460-3B3FC8345645}
+	EndGlobalSection
+EndGlobal
