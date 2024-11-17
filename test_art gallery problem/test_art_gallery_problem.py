@@ -1,6 +1,7 @@
 # Plik główny, zawierający main()
 
 import pygame
+import pandas as pd
 from rysowanie_okna import *
 from test_funkcje_pomocnicze import *
 
@@ -81,6 +82,10 @@ def main():
         pygame.display.flip()
 
     pygame.quit()
+
+class TestPunkty:
+    def test_liczba_punktów(self):
+        assert len(pd.read_csv(r'test_art gallery problem/wspolrzedne_punktow.csv')) > 2
 
 if __name__ == "__main__":
     main()
