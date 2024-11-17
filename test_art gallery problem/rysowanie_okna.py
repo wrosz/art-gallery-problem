@@ -2,7 +2,7 @@
 # Zawiera też zmienne konfigurujące wielkość i położenie poszczególnych elementów interfejsu oraz krotki definiujące podstawowe kolory.
 
 import pygame
-from funkcje_pomocnicze import wspol_osiowe, wyswietl_tekst
+from test_funkcje_pomocnicze import wspol_osiowe, wyswietl_tekst
 
 
 # ---------------------------- KONFIGURACJA ----------------------------
