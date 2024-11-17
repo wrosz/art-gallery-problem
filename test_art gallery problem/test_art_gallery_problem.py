@@ -2,7 +2,7 @@
 
 import pygame
 from rysowanie_okna import *
-from funkcje_pomocnicze import *
+from test_funkcje_pomocnicze import *
 
 
 def main():
