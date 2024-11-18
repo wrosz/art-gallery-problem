@@ -9,8 +9,6 @@ import pygame
 import csv
 from typing import List, Tuple, Union
 
-
-
 def circle_collidepoint(center: Tuple[int, int], radius: float, point: Tuple[int, int]) -> bool:
     '''Sprawdza, czy punkt o współrzędnych point należy do koła o środku w punkcie center i promieniu radius'''
     if center is None:

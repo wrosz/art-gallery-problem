@@ -3,7 +3,7 @@
 
 import pygame
 from funkcje_pomocnicze import wspol_osiowe, wyswietl_tekst
-
+from typing import List, Union
 
 # ---------------------------- KONFIGURACJA ----------------------------
 
@@ -11,21 +11,24 @@ from funkcje_pomocnicze import wspol_osiowe, wyswietl_tekst
 WHITE = (255, 255, 255)
 BLACK = (0, 0, 0)
 GREY = (200, 200, 200)
+LIGHT_GREY = (230, 230, 230)
+DARK_GREY = (100, 100, 100)
 RED = (255, 0, 0)
+YELLOW = (255, 255, 100)
 
 # Wymiary elementów okna
 canvas_width, canvas_height = 700, 500  # Wymiary płótna
 komunikat_width, komunikat_height = canvas_width, 40  # Wymiary komunikatów wyświetlanych na górze okna
-odstep_gora, odstep_boki, odstep_dol = 10, 40, 80  # Odstępy elementów od krawędzi
+odstep_gora, odstep_lewa, odstep_dol, odstep_prawa = 10, 40, 80, 200  # Odstępy elementów od krawędzi
 
 # Wyliczenia wymiarów okna
-window_width = canvas_width + 2 * odstep_boki
+window_width = canvas_width + odstep_lewa + odstep_prawa
 window_height = canvas_height + komunikat_height + 2 * odstep_gora + odstep_dol
 
 # Współrzędne elementów
-canvas_rect = pygame.Rect(odstep_boki, komunikat_height + 2 * odstep_gora, canvas_width, canvas_height)
-komunikat_rect = pygame.Rect(odstep_boki, odstep_gora, komunikat_width, komunikat_height)
-wspolrzedne_rect = pygame.Rect(odstep_boki, window_height - odstep_dol/2, canvas_width, odstep_dol/2)
+canvas_rect = pygame.Rect(odstep_lewa, komunikat_height + 2 * odstep_gora, canvas_width, canvas_height)
+komunikat_rect = pygame.Rect(odstep_lewa, odstep_gora, komunikat_width, komunikat_height)
+wspolrzedne_rect = pygame.Rect(odstep_lewa, window_height - odstep_dol/2, canvas_width, odstep_dol/2)
 
 
 # ---------------------------- FUNKCJE ----------------------------
@@ -54,7 +57,7 @@ def draw_grid(screen):
     """Rysuje siatkę na płótnie."""
     for x in range(0, canvas_width + 1, 20):  # Linie pionowe siatki
         x_pos = canvas_rect.left + x
-        pygame.draw.line(screen, GREY, (x_pos, canvas_rect.bottom), (x_pos, canvas_rect.top), 1)
+        pygame.draw.line(screen, GREY, (x_pos, canvas_rect.bottom), (x_pos, canvas_rect.top), 1, )
     for y in range(0, canvas_height + 1, 20):  # Linie poziome siatki
         y_pos = canvas_rect.bottom - y
         pygame.draw.line(screen, GREY, (canvas_rect.left, y_pos), (canvas_rect.right, y_pos), 1)
@@ -90,7 +93,49 @@ def wyswietl_wspolrzedne_kursora(screen, mouse_x, mouse_y):
     if canvas_rect.collidepoint(mouse_x, mouse_y):
         wyswietl_tekst(f'x:{x}, y:{y}', screen, wspolrzedne_rect, font_size=15, background_color=GREY)
     else:
-        pygame.draw.rect(screen, GREY, wspolrzedne_rect)
+        pygame.draw.rect(screen, GREY, wspolrzedne_rect)  # współrzędne znikają, gdy kursor myszy poza obszarem płótna
+
+
+def wyswietl_wielokat(screen, sciezka_do_pliku:str):
+    """Wyświetla na płótnie wielokąt załadowany z pliku"""
+
+    rysunek = pygame.image.load(sciezka_do_pliku)
+    rysunek = pygame.transform.scale(rysunek, (canvas_width, canvas_height))
+    draw_canvas_area(screen) # wyczyszczenie płótna
+    screen.blit(rysunek, canvas_rect.topleft)  # naniesienie striangulowanego wielokąta
+    draw_grid(screen)
+    draw_axes(screen)
+    
+
+def wyswietl_menu(screen, ktory_aktywny:Union[int, None], ktore_mozliwe:List[int]):
+    dlugosc_menu = 4
+    menu = [None for i in range(dlugosc_menu)]  # prostokąty z elementami menu
+    teksty = ["Pokaż wielokąt", "Pokaż triangulację", ["Pokaż obszary,", "które widzą strażnicy"], "Rysuj nowy wielokąt"]  # teksty wyświetlane na elementach menu
+    kolory_tekstu = [BLACK if ktore_mozliwe[i] else DARK_GREY for i in range(3)] + [RED]
+    kolory_menu = [WHITE if ktore_mozliwe[i] else LIGHT_GREY for i in range(dlugosc_menu)]  # kolory elementów menu, zależne od argumentów ktory_aktywny i ktore_mozliwe
+    if ktory_aktywny is not None:
+        kolory_tekstu[ktory_aktywny] = BLACK
+        kolory_menu[ktory_aktywny] = YELLOW
+    
+    for i in range(dlugosc_menu):
+        menu[i] = pygame.Rect(canvas_rect.right + 20, canvas_rect.top + i * 100, odstep_prawa-40, 80)
+        wyswietl_tekst(teksty[i], screen, menu[i], color=kolory_tekstu[i], background_color=kolory_menu[i])
+
+    return menu
+
+
+def wyczysc_plotno(screen):
+    draw_canvas_area(screen)
+    draw_grid(screen)
+    draw_axes(screen)
+
+
+
+
+
+
+
+
 
 
 
