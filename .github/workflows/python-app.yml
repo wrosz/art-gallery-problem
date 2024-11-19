@@ -32,12 +32,11 @@ jobs:
       run: |
         python -m pip install pygame --upgrade pip
     - name: Install pandas
-        - name: Install tripy
-      run: |
-        python -m pip install tripy --upgrade pip
-    - name: Install pandas
       run: |
         python -m pip install --upgrade pip pandas
+    - name: Install tripy
+      run: |
+        python -m pip install tripy --upgrade pip
     - name: Lint with flake8
       run: |
         # stop the build if there are Python syntax errors or undefined names
