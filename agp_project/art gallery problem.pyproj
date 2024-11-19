@@ -1,0 +1,48 @@
+<Project DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003" ToolsVersion="4.0">
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <SchemaVersion>2.0</SchemaVersion>
+    <ProjectGuid>eb5dcafc-c3f2-493b-a4c6-8c297895efba</ProjectGuid>
+    <ProjectHome>.</ProjectHome>
+    <StartupFile>pliki_zrodlowe\main.py</StartupFile>
+    <SearchPath>
+    </SearchPath>
+    <WorkingDirectory>.</WorkingDirectory>
+    <OutputPath>.</OutputPath>
+    <Name>art gallery problem</Name>
+    <RootNamespace>art gallery problem</RootNamespace>
+    <TestFramework>Pytest</TestFramework>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)' == 'Debug' ">
+    <DebugSymbols>true</DebugSymbols>
+    <EnableUnmanagedDebugging>false</EnableUnmanagedDebugging>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)' == 'Release' ">
+    <DebugSymbols>true</DebugSymbols>
+    <EnableUnmanagedDebugging>false</EnableUnmanagedDebugging>
+  </PropertyGroup>
+  <ItemGroup>
+    <Compile Include="pliki_zrodlowe\funkcje_pomocnicze.py" />
+    <Compile Include="pliki_zrodlowe\main.py" />
+    <Compile Include="pliki_zrodlowe\rysowanie_okna.py" />
+    <Compile Include="pliki_zrodlowe\triangulacja.py" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="pliki_wielokat\rysunek_triangulacja.png" />
+    <Content Include="pliki_wielokat\rysunek_wielokat.png" />
+    <Content Include="pliki_wielokat\wspolrzedne_punktow.csv" />
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="pliki_wielokat\" />
+    <Folder Include="pliki_zrodlowe\" />
+  </ItemGroup>
+  <Import Project="$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v$(VisualStudioVersion)\Python Tools\Microsoft.PythonTools.targets" />
+  <!-- Uncomment the CoreCompile target to enable the Build command in
+       Visual Studio and specify your pre- and post-build commands in
+       the BeforeBuild and AfterBuild targets below. -->
+  <!--<Target Name="CoreCompile" />-->
+  <Target Name="BeforeBuild">
+  </Target>
+  <Target Name="AfterBuild">
+  </Target>
+</Project>
