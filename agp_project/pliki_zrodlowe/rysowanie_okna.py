@@ -2,39 +2,10 @@
 # Zawiera też zmienne konfigurujące wielkość i położenie poszczególnych elementów interfejsu oraz krotki definiujące podstawowe kolory.
 
 import pygame
-from funkcje_pomocnicze import wspol_osiowe, wyswietl_tekst
 from typing import List, Union
+from funkcje_pomocnicze import wspol_osiowe, wyswietl_tekst
+from konfiguracja_okna import *
 
-# ---------------------------- KONFIGURACJA ----------------------------
-
-# Kolory
-WHITE = (255, 255, 255)
-BLACK = (0, 0, 0)
-GREY = (200, 200, 200)
-LIGHT_GREY = (230, 230, 230)
-DARK_GREY = (100, 100, 100)
-RED = (255, 0, 0)
-YELLOW = (255, 255, 100)
-GREEN = (100, 255, 100)
-
-# Wymiary elementów okna
-canvas_width, canvas_height = 700, 500  # Wymiary płótna
-komunikat_width, komunikat_height = canvas_width, 40  # Wymiary komunikatów wyświetlanych na górze okna
-odstep_gora, odstep_lewa, odstep_dol, odstep_prawa = 10, 40, 80, 200  # Odstępy elementów od krawędzi
-
-# Wyliczenia wymiarów okna
-window_width = canvas_width + odstep_lewa + odstep_prawa
-window_height = canvas_height + komunikat_height + 2 * odstep_gora + odstep_dol
-
-# Współrzędne elementów
-canvas_rect = pygame.Rect(odstep_lewa, komunikat_height + 2 * odstep_gora, canvas_width, canvas_height)
-komunikat_rect = pygame.Rect(odstep_lewa, odstep_gora, komunikat_width, komunikat_height)
-wspolrzedne_rect = pygame.Rect(odstep_lewa, window_height - odstep_dol/2, canvas_width, odstep_dol/2)
-
-point_radius = 5  # promień koła oznaczającego wierzchołek wprowadzanego wielokąta
-
-
-# ---------------------------- FUNKCJE ----------------------------
 
 def init_window():
     '''Inicjalizuje pygame i tworzy okno.'''
@@ -117,8 +88,8 @@ def wyswietl_menu(screen, ktory_aktywny:Union[int, None], ktore_mozliwe:List[int
     dlugosc_menu = 4
     menu = [None for i in range(dlugosc_menu)]  # prostokąty z elementami menu
     teksty = ['Pokaż wielokąt', 'Pokaż triangulację', ['Pokaż obszary,', 'które widzą strażnicy'], 'Rysuj nowy wielokąt']  # teksty wyświetlane na elementach menu
-    kolory_tekstu = [BLACK if ktore_mozliwe[i] else DARK_GREY for i in range(3)] + [RED]
-    kolory_menu = [WHITE if ktore_mozliwe[i] else LIGHT_GREY for i in range(dlugosc_menu)]  # kolory elementów menu, zależne od argumentów ktory_aktywny i ktore_mozliwe
+    kolory_tekstu = [BLACK if ktore_mozliwe[i] else DARK_GREY for i in range(3)] + [WHITE]
+    kolory_menu = [WHITE if ktore_mozliwe[i] else LIGHT_GREY for i in range(3)] + [DARK_RED]  # kolory elementów menu, zależne od argumentów ktory_aktywny i ktore_mozliwe
     if ktory_aktywny is not None:
         kolory_tekstu[ktory_aktywny] = BLACK
         kolory_menu[ktory_aktywny] = YELLOW
@@ -131,7 +102,6 @@ def wyswietl_menu(screen, ktory_aktywny:Union[int, None], ktore_mozliwe:List[int
 
 def wyswietl_liczbe_straznikow(screen, liczba_straznikow):
     height_offset = 12
-
 
     ramka_wspolrzedne = pygame.Rect(canvas_rect.right + 20, komunikat_rect.top, odstep_prawa-40, komunikat_height + odstep_gora + 60)
     tekst1_wspolrzedne = pygame.Rect(canvas_rect.right + 20, komunikat_rect.top + height_offset, odstep_prawa-40, komunikat_height)
@@ -154,9 +124,6 @@ def wyswietl_liczbe_straznikow(screen, liczba_straznikow):
     pygame.draw.rect(screen, color=kolor_ramki, rect=ramka_wspolrzedne)
     wyswietl_tekst(tekst1, screen, tekst1_wspolrzedne, font_size=fontsize1, color=kolor1, background_color=kolor_ramki)
     wyswietl_tekst(tekst2, screen, tekst2_wspolrzedne, font_size=fontsize2, color=kolor2, background_color=kolor_ramki)
-    
-
-
 
 
 def wyczysc_plotno(screen):

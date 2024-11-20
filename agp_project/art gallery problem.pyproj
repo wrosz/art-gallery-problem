@@ -23,6 +23,7 @@
   </PropertyGroup>
   <ItemGroup>
     <Compile Include="pliki_zrodlowe\funkcje_pomocnicze.py" />
+    <Compile Include="pliki_zrodlowe\konfiguracja_okna.py" />
     <Compile Include="pliki_zrodlowe\main.py" />
     <Compile Include="pliki_zrodlowe\rysowanie_okna.py" />
     <Compile Include="pliki_zrodlowe\triangulacja.py" />

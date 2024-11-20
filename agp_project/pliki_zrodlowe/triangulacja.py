@@ -9,7 +9,7 @@ import matplotlib
 matplotlib.use('Agg')
 import numpy as np
 import random
-from rysowanie_okna import canvas_width, canvas_height
+from konfiguracja_okna import canvas_width, canvas_height
 
 
     

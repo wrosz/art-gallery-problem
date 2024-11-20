@@ -1,6 +1,7 @@
 # Plik główny, zawierający main()
 
 import pygame
+from pliki_zrodlowe.konfiguracja_okna import *
 from pliki_zrodlowe.rysowanie_okna import *
 from pliki_zrodlowe.funkcje_pomocnicze import *
 from pliki_zrodlowe.triangulacja import oblicz_liczbe_straznikow, zapisz_obrazy, min_guards
@@ -58,7 +59,7 @@ def main():
 
                 # OBSŁUGA MENU:
                 for i in range(3):  # obsługa pierwszych trzech pozycji, wyświetla wielokąt i strażników 
-                                    # (0: sam wielokąt, 1: triangulację i strażników, 3: obszary, które widzą strażnicy)
+                                    # (0: tylko strażników, 1: triangulację i strażników, 3: obszary, które widzą strażnicy)
                     if menu[i].collidepoint(mouse_x, mouse_y) and ktore_mozliwe[i]:
                         wyswietl_wielokat(screen, rysunki_do_wyswietlenia[i])
                         ktory_aktywny = i

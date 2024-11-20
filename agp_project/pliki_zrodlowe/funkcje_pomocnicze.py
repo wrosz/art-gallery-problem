@@ -8,6 +8,7 @@
 import pygame
 import csv
 from typing import List, Tuple, Union
+from konfiguracja_okna import *
 
 
 def circle_collidepoint(center: Tuple[int, int], radius: float, point: Tuple[int, int]) -> bool:
@@ -120,7 +121,6 @@ def doIntersect(p1,q1,p2,q2):
     return False
 
 
-point_radius = 5
 def sprawdz_samoprzeciecia(p1, punkty:List[Tuple[int, int]]):  # https://www.geeksforgeeks.org/check-if-two-given-line-segments-intersect/
     '''Główna funkcja. Zwraca True, jeśli punkt odcinek łączący punkt p1 z ostatnim elementem listy punkty
     przecina któryś z segmentów ścieżki łączącej poprzednie punkty z tej listy.'''
