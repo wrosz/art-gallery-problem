@@ -1,6 +1,5 @@
 # Funkcje związane z triangulacją i znajdowaniem liczby strażników, oraz z ilustrowaniem wyników
 
-
 import csv
 from matplotlib.markers import MarkerStyle
 from pygame import color

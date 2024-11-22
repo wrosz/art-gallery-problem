@@ -1,12 +1,12 @@
 # Plik główny, zawierający main()
 
 import pygame
-
 from pliki_zrodlowe.funkcje_pomocnicze import *
 from pliki_zrodlowe.konfiguracja_okna import *
 from pliki_zrodlowe.rysowanie_okna import *
 from pliki_zrodlowe.triangulacja import *
 from pliki_zrodlowe.wprowadzanie_pliku import *
+
 
 def main():
 
@@ -104,8 +104,6 @@ def main():
                     ktore_mozliwe = [True for i in range(4)]
                     wyswietl_menu(screen, ktory_aktywny, ktore_mozliwe)
                     wyswietl_tekst(['Gotowe!','Aby wyświetlić wyniki, wybierz jedną z opcji po prawej stronie.'], screen, komunikat_rect)
-
-                    
 
 
                 # WPROWADZANIE PRZEZ UŻYTKOWNIKA WIELOKĄTA:

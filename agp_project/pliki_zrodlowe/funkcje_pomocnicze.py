@@ -149,6 +149,3 @@ def sprawdz_samoprzeciecia(p1, punkty:List[Tuple[int, int]]):  # https://www.gee
             if doIntersect(p1, q1, p2, q2):
                 return True
     return False
-
-
-
