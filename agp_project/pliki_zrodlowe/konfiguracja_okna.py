@@ -12,6 +12,7 @@ RED = (255, 0, 0)
 DARK_RED = (180, 0, 0)
 YELLOW = (255, 255, 100)
 GREEN = (100, 255, 100)
+DARK_BLUE = (0, 0, 180)
 
 # Wymiary elementów okna
 canvas_width, canvas_height = 700, 500  # Wymiary p³ótna

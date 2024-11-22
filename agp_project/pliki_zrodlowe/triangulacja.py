@@ -1,3 +1,6 @@
+# Funkcje związane z triangulacją i znajdowaniem liczby strażników, oraz z ilustrowaniem wyników
+
+
 import csv
 from matplotlib.markers import MarkerStyle
 from pygame import color
@@ -8,25 +11,35 @@ import matplotlib.patches as patches
 import matplotlib
 matplotlib.use('Agg')
 import numpy as np
-import random
-from konfiguracja_okna import canvas_width, canvas_height
+from pliki_zrodlowe.konfiguracja_okna import canvas_width, canvas_height
 
 
-    
 def read_coordinates_from_csv(filepath):
+    '''Czyta współrzędne punktów wielokąta z pliku .csv.
+    Zwraca krotkę ze współrzędnymi.
+    '''
     with open(filepath) as f:
         reader = csv.reader(f, delimiter=',')
-        next(reader, None)  
-        return [[int(x), int(y)] for x, y in reader]
+        next(reader, None)  # ominięcie pierwszej linijki z nagłówkami
+        return tuple([(int(x), int(y)) for x, y in reader])
 
 
 def triangulate_polygon(x):
+    '''Zwraca krotkę krotek definiującą trójkąty, na które jest podzielony wielokąt.
+    Argumenty:
+    x - lista (krotka) współrzędnych kolejnych wierzchołków wielokąta
+    '''
     return tripy.earclip(x)
 
 
 def three_coloring(vertices, triangles):
+    '''Znajduje dobre 3-kolorowanie wierzchołków striangularyzowanego wielokąta.
+    Zwraca słownik postaci {vertex:color}, gdzie:
+    vertex - krotka ze współrzędnymi wierzchołka
+    color - kolor wierzchołka, liczba 0, 1, lub 2
+    '''
     triangles = np.array(triangles)
-    vertices = (tuple(v) for v in vertices)
+    vertices = (v for v in vertices)
     colors = {vertex:-1 for vertex in vertices}  # słownik z kolorami wierzchołków, -1 oznacza, że wierzchołek jeszcze nie jest pokolorowany
     to_color = np.array([True for triangle in triangles])  # jeśli True, to znaczy że trójkąt ma jeszcze co najmniej jeden niepokolorowany wierzchołek
     indexes = np.arange(len(triangles))  # indeksy wszystkich trójkątów w triangles
@@ -53,7 +66,12 @@ def three_coloring(vertices, triangles):
             to_color[i] = False
     return colors
 
+
 def min_guards(coloring):
+    '''Zwraca dwa obiekty:
+    guards - lista ze strażnikami (współrzędnymi wierzchołków pokolorowanych na najrzadziej występujący kolor
+    min_color - liczba 0, 1 lub 2 oznaczająca najrzadziej występujący kolor
+    '''
     colors_occ = [0, 0, 0]
     guards = []
     for vertex, color in coloring.items():
@@ -67,6 +85,7 @@ def min_guards(coloring):
 
 
 def oblicz_liczbe_straznikow():
+    '''Zwraca liczbę strażników dla wielokąta zdefiniowanego w pliku wspolrzedne_punktow.csv'''
     f = 'pliki_wielokat/wspolrzedne_punktow.csv'
     coordinates = read_coordinates_from_csv(f)
     triangles = triangulate_polygon(coordinates)
@@ -142,8 +161,5 @@ def zapisz_obrazy():
         triangle_color = guard_colors[guard_index]
         plt.fill(x, y, color=triangle_color)
     plt.scatter(guards_x, guards_y, c=guard_colors, linewidth=1, s=100, edgecolor='black')
-
-
     plt.savefig('pliki_wielokat/rysunek_straznicy.png', bbox_inches='tight', pad_inches=0, dpi=600)
         
-

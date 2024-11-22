@@ -3,8 +3,8 @@
 
 import pygame
 from typing import List, Union
-from funkcje_pomocnicze import wspol_osiowe, wyswietl_tekst
-from konfiguracja_okna import *
+from pliki_zrodlowe.funkcje_pomocnicze import wspol_osiowe, wyswietl_tekst
+from pliki_zrodlowe.konfiguracja_okna import *
 
 
 def init_window():
@@ -18,13 +18,11 @@ def init_window():
 def draw_canvas_area(screen):
     '''Rysuje główne płótno na obszarze canvas_rect.'''
     pygame.draw.rect(screen, WHITE, canvas_rect)
-    return canvas_rect
 
 
 def draw_komunikat_area(screen):
     '''Rysuje obszar na komunikaty na górze okna.'''
     pygame.draw.rect(screen, WHITE, komunikat_rect)
-    return komunikat_rect
 
 
 def draw_grid(screen):
@@ -65,8 +63,7 @@ def draw_axes(screen):
 
 
 def wyswietl_wspolrzedne_kursora(screen, mouse_x, mouse_y):
-    '''Wyświetla współrzędne kursora myszy jeśli znajduje się on w obszarze płótna, w przeciwnym przypadku współrzędne znikają'''
-
+    '''Wyświetla współrzędne kursora myszy jeśli znajduje się on w obszarze płótna, w przeciwnym przypadku współrzędne znikają.'''
     (x, y) = wspol_osiowe((mouse_x, mouse_y), canvas_rect)
     if canvas_rect.collidepoint(mouse_x, mouse_y):
         wyswietl_tekst(f'x:{x}, y:{y}', screen, wspolrzedne_rect, font_size=15, background_color=GREY)
@@ -75,8 +72,7 @@ def wyswietl_wspolrzedne_kursora(screen, mouse_x, mouse_y):
 
 
 def wyswietl_wielokat(screen, sciezka_do_pliku:str):
-    '''Wyświetla na płótnie wielokąt załadowany z pliku'''
-
+    '''Wyświetla na płótnie wielokąt załadowany z pliku.'''
     rysunek = pygame.image.load(sciezka_do_pliku)
     rysunek = pygame.transform.scale(rysunek, (canvas_width, canvas_height))
     draw_canvas_area(screen) # wyczyszczenie płótna
@@ -85,28 +81,39 @@ def wyswietl_wielokat(screen, sciezka_do_pliku:str):
     
 
 def wyswietl_menu(screen, ktory_aktywny:Union[int, None], ktore_mozliwe:List[int]):
-    dlugosc_menu = 4
+    '''Wyświetla menu z elementami:
+    0: Pokaż wielokąt
+    1: Pokaż triangulację
+    2: Pokaż obszary, które widzą strażnicy
+    3: Rysuj nowy wielokąt
+    4: Załaduj współrzędne z pliku .csv
+    Zwraca współrzędne poszczególnych elementów menu
+    '''
+    dlugosc_menu = 5
     menu = [None for i in range(dlugosc_menu)]  # prostokąty z elementami menu
-    teksty = ['Pokaż wielokąt', 'Pokaż triangulację', ['Pokaż obszary,', 'które widzą strażnicy'], 'Rysuj nowy wielokąt']  # teksty wyświetlane na elementach menu
-    kolory_tekstu = [BLACK if ktore_mozliwe[i] else DARK_GREY for i in range(3)] + [WHITE]
-    kolory_menu = [WHITE if ktore_mozliwe[i] else LIGHT_GREY for i in range(3)] + [DARK_RED]  # kolory elementów menu, zależne od argumentów ktory_aktywny i ktore_mozliwe
+    teksty = ['Pokaż wielokąt', 'Pokaż triangulację', ['Pokaż obszary,', 'które widzą strażnicy'], 'Rysuj nowy wielokąt', ['Załaduj współrzędne', 'z pliku .csv']]  # teksty wyświetlane na elementach menu
+    kolory_tekstu = [BLACK if ktore_mozliwe[i] else DARK_GREY for i in range(3)] + [WHITE, WHITE]
+    kolory_menu = [WHITE if ktore_mozliwe[i] else LIGHT_GREY for i in range(3)] + [DARK_RED, DARK_BLUE]  # kolory elementów menu, zależne od argumentów ktory_aktywny i ktore_mozliwe
     if ktory_aktywny is not None:
         kolory_tekstu[ktory_aktywny] = BLACK
         kolory_menu[ktory_aktywny] = YELLOW
     
     for i in range(dlugosc_menu):
-        menu[i] = pygame.Rect(canvas_rect.right + 20, canvas_rect.top + (i + 1) * 100, odstep_prawa-40, 80)
+        menu[i] = pygame.Rect(canvas_rect.right + 20, canvas_rect.top + (i + 1) * 80, odstep_prawa-40, 60)
         wyswietl_tekst(teksty[i], screen, menu[i], color=kolory_tekstu[i], background_color=kolory_menu[i])
 
     return menu
 
+
 def wyswietl_liczbe_straznikow(screen, liczba_straznikow):
-    height_offset = 12
+    ''''Wyświetla liczbę strażników w ramce w prawym górnym rogu, o ile jest już ona obliczona
+    (w przeciwnym wypadku pisze "...")'''
 
-    ramka_wspolrzedne = pygame.Rect(canvas_rect.right + 20, komunikat_rect.top, odstep_prawa-40, komunikat_height + odstep_gora + 60)
-    tekst1_wspolrzedne = pygame.Rect(canvas_rect.right + 20, komunikat_rect.top + height_offset, odstep_prawa-40, komunikat_height)
-    tekst2_wspolrzedne = pygame.Rect(canvas_rect.right + 20, komunikat_rect.bottom + height_offset, odstep_prawa-40, komunikat_height)
+    height_offset = 12  # ustala, jak nisko powinien być tekst w ramce względem górnej krawędzi boxa z komunikatami
 
+    ramka_wspolrzedne = pygame.Rect(canvas_rect.right + 20, komunikat_rect.top, odstep_prawa-40, komunikat_height + odstep_gora + 60)  # współrzędne ramki
+    tekst1_wspolrzedne = pygame.Rect(canvas_rect.right + 20, komunikat_rect.top + height_offset, odstep_prawa-40, komunikat_height)   # 'Wyświetl liczbę strażników'
+    tekst2_wspolrzedne = pygame.Rect(canvas_rect.right + 20, komunikat_rect.bottom + height_offset, odstep_prawa-40, komunikat_height)  # string z liczbą strażników
     tekst1 = 'Liczba strażników:'
     fontsize1 = 20
     fontsize2 = 60
@@ -121,12 +128,14 @@ def wyswietl_liczbe_straznikow(screen, liczba_straznikow):
         kolor2 = BLACK
         tekst2 = str(liczba_straznikow)
     
-    pygame.draw.rect(screen, color=kolor_ramki, rect=ramka_wspolrzedne)
+    pygame.draw.rect(screen, color=kolor_ramki, rect=ramka_wspolrzedne)  # rysowanie ramki
     wyswietl_tekst(tekst1, screen, tekst1_wspolrzedne, font_size=fontsize1, color=kolor1, background_color=kolor_ramki)
     wyswietl_tekst(tekst2, screen, tekst2_wspolrzedne, font_size=fontsize2, color=kolor2, background_color=kolor_ramki)
 
 
 def wyczysc_plotno(screen):
+    '''Rysuje od nowa płótno z osiami i siatką'''
+    # szary prostokąt, aby nie nanosić wielokrotnie osi (wtedy niepotrzebnie pogrubia się tekst z etykietami osi, co brzydko wygląda)
     pygame.draw.rect(screen, GREY, pygame.Rect(0, komunikat_height + odstep_gora,
                                                odstep_lewa + canvas_width + 20, window_height - (komunikat_height + odstep_gora)))
     draw_canvas_area(screen)

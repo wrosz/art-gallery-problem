@@ -1,24 +1,25 @@
 # Plik główny, zawierający main()
 
 import pygame
+
+from pliki_zrodlowe.funkcje_pomocnicze import *
 from pliki_zrodlowe.konfiguracja_okna import *
 from pliki_zrodlowe.rysowanie_okna import *
-from pliki_zrodlowe.funkcje_pomocnicze import *
-from pliki_zrodlowe.triangulacja import oblicz_liczbe_straznikow, zapisz_obrazy, min_guards
-
+from pliki_zrodlowe.triangulacja import *
+from pliki_zrodlowe.wprowadzanie_pliku import *
 
 def main():
 
     # Inicjalizacja i rysowanie okna
     screen = init_window()
-    canvas_rect = draw_canvas_area(screen)
-    komunikat_rect = draw_komunikat_area(screen)
+    draw_canvas_area(screen)
+    draw_komunikat_area(screen)
     draw_grid(screen)
     draw_axes(screen)
 
     # Obsługa menu
     ktory_aktywny = None
-    ktore_mozliwe = [False, False, False, True]
+    ktore_mozliwe = [False, False, False]  # które z trzech pierwszych opcji aktywne i które są możliwe
     menu = wyswietl_menu(screen, ktory_aktywny, ktore_mozliwe)
     rysunki_do_wyswietlenia = ['pliki_wielokat/rysunek_wielokat.png', 'pliki_wielokat/rysunek_triangulacja.png', 'pliki_wielokat/rysunek_straznicy.png']
 
@@ -63,10 +64,12 @@ def main():
                     if menu[i].collidepoint(mouse_x, mouse_y) and ktore_mozliwe[i]:
                         wyswietl_wielokat(screen, rysunki_do_wyswietlenia[i])
                         ktory_aktywny = i
-                        ktore_mozliwe = [True for i in range(4)]
+                        ktore_mozliwe = [True for i in range(3)]
                         wyswietl_menu(screen, ktory_aktywny, ktore_mozliwe) 
 
-                if menu[3].collidepoint(mouse_x, mouse_y) and ktore_mozliwe[3]: # rysowanie nowego wielokąta
+                if menu[3].collidepoint(mouse_x, mouse_y): # rysowanie nowego wielokąta
+                        liczba_straznikow = None
+                        wyswietl_liczbe_straznikow(screen, liczba_straznikow)
                         wyczysc_plotno(screen)
                         ktory_aktywny = None
                         ktore_mozliwe = [False, False, False, True]
@@ -79,7 +82,30 @@ def main():
                         last_pos = None  
                         current_pos = None 
                         first_pos = None 
-                        punkty = []  
+                        punkty = []
+                        
+                if menu[4].collidepoint(mouse_x, mouse_y):  # ładowanie wielokąta z pliku
+                    draw_enabled = False
+                    filepath = plik_z_okna_dialogowego()
+                    try:  # przepisz współrzędne z pliku do pliku wspolrzedne_punktow.csv, jeśli plik jest w odpowiedniej postaci
+                        sprawdz_plik(filepath)
+                    except Exception as e:
+                        wyswietl_tekst([f'Błąd: {e}.', 'Zmodyfikuj plik lub wybierz inny.'], screen, komunikat_rect, color=RED)
+                        continue
+                    wyczysc_plotno(screen)
+                    wyswietl_tekst(['Plik zaakceptowany.', 'Trwa obliczanie wyników...'], screen, komunikat_rect)
+                    pygame.display.flip()
+                    zapisz_obrazy()
+                    liczba_straznikow = oblicz_liczbe_straznikow()
+                    wyswietl_liczbe_straznikow(screen, liczba_straznikow)
+                    i = 0  # domyślnie wybiera się opcja 'Wyświetl wielokąt' z menu po prawej stronie
+                    wyswietl_wielokat(screen, rysunki_do_wyswietlenia[i])
+                    ktory_aktywny = i
+                    ktore_mozliwe = [True for i in range(4)]
+                    wyswietl_menu(screen, ktory_aktywny, ktore_mozliwe)
+                    wyswietl_tekst(['Gotowe!','Aby wyświetlić wyniki, wybierz jedną z opcji po prawej stronie.'], screen, komunikat_rect)
+
+                    
 
 
                 # WPROWADZANIE PRZEZ UŻYTKOWNIKA WIELOKĄTA:

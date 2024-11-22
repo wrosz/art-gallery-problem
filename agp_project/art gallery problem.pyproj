@@ -4,7 +4,7 @@
     <SchemaVersion>2.0</SchemaVersion>
     <ProjectGuid>eb5dcafc-c3f2-493b-a4c6-8c297895efba</ProjectGuid>
     <ProjectHome>.</ProjectHome>
-    <StartupFile>pliki_zrodlowe\main.py</StartupFile>
+    <StartupFile>main.py</StartupFile>
     <SearchPath>
     </SearchPath>
     <WorkingDirectory>.</WorkingDirectory>
@@ -24,11 +24,13 @@
   <ItemGroup>
     <Compile Include="pliki_zrodlowe\funkcje_pomocnicze.py" />
     <Compile Include="pliki_zrodlowe\konfiguracja_okna.py" />
-    <Compile Include="pliki_zrodlowe\main.py" />
+    <Compile Include="main.py" />
+    <Compile Include="pliki_zrodlowe\wprowadzanie_pliku.py" />
     <Compile Include="pliki_zrodlowe\rysowanie_okna.py" />
     <Compile Include="pliki_zrodlowe\triangulacja.py" />
   </ItemGroup>
   <ItemGroup>
+    <Content Include="pliki_wielokat\rysunek_straznicy.png" />
     <Content Include="pliki_wielokat\rysunek_triangulacja.png" />
     <Content Include="pliki_wielokat\rysunek_wielokat.png" />
     <Content Include="pliki_wielokat\wspolrzedne_punktow.csv" />
