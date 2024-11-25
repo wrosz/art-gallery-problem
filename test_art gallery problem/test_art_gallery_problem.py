@@ -123,7 +123,7 @@ def main():
 
 class TestPunkty:
     def test_liczba_punktów(self):
-        assert len(pd.read_csv(r'test_art gallery problem/wspolrzedne_punktow.csv')) > 2
+        assert len(pd.read_csv(r'agp_project/pliki_wielokat/wspolrzedne_punktow.csv')) > 2
 
 if __name__ == "__main__":
     main()
