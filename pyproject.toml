@@ -1,0 +1,4 @@
+[tool.pytest.ini_options]
+pythonpath = [
+  "agp_project", "agp_project/pliki_zrodlowe", "agp_project/pliki_wielokat"
+]
